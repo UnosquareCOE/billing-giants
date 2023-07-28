@@ -39,3 +39,22 @@ MoSCoW prioritization, also known as the MoSCoW method or MoSCoW analysis, is a 
 
 - A user can book tickets for a match.
 - A user can get real-time updates from an ongoing live match.
+
+## Domain Model Diagram
+
+```mermaid
+erDiagram
+    Club o|--}| Team: has
+    Team o|--}| Player: has
+    Season o|--}| Competition : contains
+    Competition o|--}| Match : contains
+    Match o|--}| Player : has
+    Match o|--}| Event: has
+    Season o|--}| Venue: has
+    Match o|--o| Venue: has
+    Player o|--}| Achievement: has
+    Player o|--}| Event: has
+    Match o|--}| Achievement: has
+    Competition o|--}| Achievement: has
+    Competition o|--}| Club: participates
+```
