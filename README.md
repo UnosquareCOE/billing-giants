@@ -25,13 +25,11 @@ MoSCoW prioritization, also known as the MoSCoW method or MoSCoW analysis, is a 
 - An administrator can add a new match
 
 ### Should Have
-
-- A user should be able to see the jerserys that were worn for a match.
-- A user should be able to check-in for a match.
+- A user could able to see the substitutions that took place for a match.
 
 ### Could Have
-
-- A user could able to see the substitutions that took place for a match.
+- A user should be able to see the jerserys that were worn for a match.
+- A user should be able to check-in for a match.
 - A user could upload their videos and pictures for a match.
 - The system could automatically retrieve the content from a match
 
@@ -57,4 +55,9 @@ erDiagram
     Match o|--}| Achievement: has
     Competition o|--}| Achievement: has
     Competition o|--}| Club: participates
+    Team o|--}| Apparel: has
+    Match o|--}| Apparel: ""
 ```
+
+## Entity Relationship Diagram
+

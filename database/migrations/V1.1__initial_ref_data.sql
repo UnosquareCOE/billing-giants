@@ -1,0 +1,1 @@
+insert into sport_types(description) values ('Ice Hockey');
