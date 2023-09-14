@@ -61,3 +61,108 @@ erDiagram
 
 ## Entity Relationship Diagram
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## API Specifications
+
+- Seasons
+  - Get All
+  - Get Single
+  - Create
+  - Update
+  - Delete
+
+- Seasons/{seasonId}/Competitions
+  - Get All
+  - Get Single
+  - Create
+  - Update
+  - Delete
+
+- Clubs
+  - Get All
+  - Get Single
+  - Create
+  - Update
+  - Delete
+
+- Competitions/{competitionID}/Matches
+  - Get All
+  - Create
+  - Get Single
+  - Update
+  - Delete
+
+
+- Clubs/{clubID}/Teams
+  - Get All
+  - Get Single
+  - Create
+  - Update
+  - Delete
+
+- Venues
+  - Get Single
+  - Create
+  - Update
+  - Delete
+
+- Players
+  - Get All
+  - Get Single
+  - Create
+  - Update
+  - Delete
+
+- Teams/{TeamId}/player
+  - Create
+  - Delete
+  - Update
+
+- Competitions/{competitionID}/Achievements
+  - Get All
+  - Get Single
+  - Create
+  - Update
+  - Delete
+
+- Match/{MatchId}/Events
+  - Get All
+  - Get Single
+  - Create
+  - Update
+  - Delete
