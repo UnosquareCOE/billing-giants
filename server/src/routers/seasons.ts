@@ -1,12 +1,37 @@
 import { Request, Response, Router } from "express";
 import { body } from "express-validator";
 import { validation } from "../utils/validation";
+import { seasonsController } from "../controllers/seasons";
 
 const seasonRouter = Router();
 
-seasonRouter.get("/", (req: Request, res: Response) => {
-  res.json({ message: "Retrieve All" }).status(200);
-});
+/**
+ * @swagger
+ * /seasons:
+ *   get:
+ *     tags: [
+ *       seasons
+ *     ]
+ *     summary: Returns an array of seasons
+ *     parameters:
+ *       - name: startDate
+ *         in: query
+ *         type: date
+ *         description: start date for season
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             examples:
+ *               jsonObject:
+ *                 summary: An example JSON response
+ *                 value: '[{ "id": 1, "sportType": "Hockey", "startDate": "01/01/2024 00:00:00" },
+ *                       { "id": 2, "sportType": "Football", "startDate": "11/11/2023 00:00:00" }]'
+ *       204:
+ *         description: No content
+ */
+seasonRouter.get("/", seasonsController.getAll);
 
 seasonRouter.get("/:seasonId(\\d+)", (req: Request, res: Response) => {
   const { seasonId } = req.params;

@@ -6,14 +6,14 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_DB: billing-giants
+      POSTGRES_DB: billinggiants
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     volumes:
       - db:/var/lib/postgresql/data
   flyway:
     image: flyway/flyway
-    command: -url=jdbc:postgresql://db/billing-giants -schemas=public -user=postgres
+    command: -url=jdbc:postgresql://db/billinggiants -schemas=public -user=postgres
       -password=password -connectRetries=5 migrate
     volumes:
       - ./database/migrations:/flyway/sql
