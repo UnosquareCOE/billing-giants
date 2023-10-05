@@ -40,6 +40,24 @@ MoSCoW prioritization, also known as the MoSCoW method or MoSCoW analysis, is a 
 
 ## Domain Model Diagram
 
+### Club
+Details go here
+
+### Team
+Details go here
+
+### Season
+Details go here
+
+### Match
+Details go here
+
+### Player
+Details go here
+
+### Competition
+Details go here
+
 ```mermaid
 erDiagram
     Club o|--}| Team: has
