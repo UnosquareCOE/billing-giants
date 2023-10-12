@@ -23,11 +23,161 @@ model flyway_schema_history {
 }
 
 model sport_types {
-  id          Int     @id(map: "sport_types_pk") @default(autoincrement())
+  id          Int       @id(map: "sport_types_pk") @default(autoincrement())
   description String?
+  seasons     seasons[]
 }
 
-model billing_types {
-  id          Int     @id(map: "billing_types_pk") @default(autoincrement())
+model achievement_types {
+  id                       Int                        @id(map: "achievement_types_pk") @default(autoincrement())
+  name                     String?
+  competition_achievements competition_achievements[]
+}
+
+model clubs {
+  id    Int     @id(map: "clubs_pk") @default(autoincrement())
+  name  String?
+  teams teams[]
+}
+
+model competition_achievement_teams {
+  id                         Int                      @id(map: "competition_achievement_teams_pk") @default(autoincrement())
+  competition_team_id        Int
+  competition_achievement_id Int
+  competition_achievements   competition_achievements @relation(fields: [competition_achievement_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "competition_achievement_teams_competition_achievements_competit")
+  competition_teams          competition_teams        @relation(fields: [competition_team_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "competition_achievement_teams_competition_teams_competition_tea")
+}
+
+model competition_achievements {
+  id                            Int                             @id(map: "competition_achievements_pk") @default(autoincrement())
+  name                          String?
+  achievement_type_id           Int
+  competition_id                Int
+  competition_achievement_teams competition_achievement_teams[]
+  achievement_types             achievement_types               @relation(fields: [achievement_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "competition_achievements_achievement_types_achievement_type_id")
+  competitions                  competitions                    @relation(fields: [competition_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "competition_achievements_competitions_competition_id")
+}
+
+model competition_teams {
+  id                            Int                             @id(map: "competition_teams_pk") @default(autoincrement())
+  competition_id                Int
+  team_id                       Int
+  competition_achievement_teams competition_achievement_teams[]
+  competitions                  competitions                    @relation(fields: [competition_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "competition_teams_competitions_competition_id")
+  teams                         teams                           @relation(fields: [team_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "competition_teams_teams_team_id")
+  match_competition_teams       match_competition_teams[]
+}
+
+model competitions {
+  id                       Int                        @id(map: "competitions_pk") @default(autoincrement())
+  name                     String?
+  start_date               DateTime?                  @db.Timestamp(6)
+  end_date                 DateTime?                  @db.Timestamp(6)
+  season_id                Int
+  competition_achievements competition_achievements[]
+  competition_teams        competition_teams[]
+  seasons                  seasons                    @relation(fields: [season_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "competitions_season_season_id_fk")
+  matches                  matches[]
+}
+
+model event_types {
+  id          Int      @id(map: "event_types_pk") @default(autoincrement())
   description String?
+  events      events[]
+}
+
+model events {
+  id                       Int                        @id(map: "events_pk") @default(autoincrement())
+  date                     DateTime?                  @db.Timestamp(6)
+  event_type_id            Int
+  match_id                 Int
+  event_types              event_types                @relation(fields: [event_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "events_event_types_event_type_id")
+  matches                  matches                    @relation(fields: [match_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "events_matches_match_id")
+  match_team_player_events match_team_player_events[]
+}
+
+model match_competition_teams {
+  id                  Int               @id(map: "match_competition_teams_pk") @default(autoincrement())
+  competition_team_id Int
+  match_id            Int
+  match_team_type_id  Int
+  competition_teams   competition_teams @relation(fields: [competition_team_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "match_competition_teams_competition_teams_competition_team_id")
+  match_team_types    match_team_types  @relation(fields: [match_team_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "match_competition_teams_match_team_types_match_team_type_id")
+  matches             matches           @relation(fields: [match_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "match_competition_teams_matches_match_id")
+}
+
+model match_team_player_events {
+  id                   Int                @id(map: "match_team_player_events_pk") @default(autoincrement())
+  match_team_player_id Int
+  event_id             Int
+  events               events             @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "match_team_player_events_events_event_id")
+  match_team_players   match_team_players @relation(fields: [match_team_player_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "match_team_player_events_match_team_players_match_team_player_i")
+}
+
+model match_team_players {
+  id                       Int                        @id(map: "match_team_players_pk") @default(autoincrement())
+  match_id                 Int
+  team_player_id           Int
+  match_team_player_events match_team_player_events[]
+  matches                  matches                    @relation(fields: [match_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "match_team_players_matches_match_id")
+  team_players             team_players               @relation(fields: [team_player_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "match_team_players_team_players_team_player_id")
+}
+
+model match_team_types {
+  id                      Int                       @id(map: "match_team_types_pk") @default(autoincrement())
+  name                    String?
+  match_competition_teams match_competition_teams[]
+}
+
+model matches {
+  id                      Int                       @id(map: "matches_pk") @default(autoincrement())
+  date                    DateTime?                 @db.Timestamp(6)
+  venue_id                Int
+  competition_id          Int
+  events                  events[]
+  match_competition_teams match_competition_teams[]
+  match_team_players      match_team_players[]
+  competitions            competitions              @relation(fields: [competition_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "matches_competitions_competition_id_fk")
+  venues                  venues                    @relation(fields: [venue_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "matches_venues_venue_id_fk")
+}
+
+model players {
+  id           Int            @id(map: "players_pk") @default(autoincrement())
+  name         String?
+  team_players team_players[]
+}
+
+model seasons {
+  id            Int            @id(map: "seasons_pk") @default(autoincrement())
+  start_date    DateTime?      @db.Timestamp(6)
+  end_date      DateTime?      @db.Timestamp(6)
+  sport_type_id Int
+  competitions  competitions[]
+  sport_types   sport_types    @relation(fields: [sport_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "seasons_sport_types_sport_type_id_fk")
+}
+
+model team_players {
+  id                 Int                  @id(map: "team_players_pk") @default(autoincrement())
+  start_date         DateTime?            @db.Timestamp(6)
+  end_date           DateTime?            @db.Timestamp(6)
+  team_id            Int
+  player_id          Int
+  match_team_players match_team_players[]
+  players            players              @relation(fields: [player_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "team_players_players_player_id")
+  teams              teams                @relation(fields: [team_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "team_players_teams_team_id")
+}
+
+model teams {
+  id                Int                 @id(map: "teams_pk") @default(autoincrement())
+  name              String?
+  club_id           Int
+  competition_teams competition_teams[]
+  team_players      team_players[]
+  clubs             clubs               @relation(fields: [club_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "teams_clubs_club_id_fk")
+}
+
+model venues {
+  id      Int       @id(map: "venues_pk") @default(autoincrement())
+  name    String?
+  matches matches[]
 }
