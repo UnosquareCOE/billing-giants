@@ -106,7 +106,7 @@ seasonRouter.post(
 
 /**
  * @swagger
- * /seasons:
+ * /seasons/{seasonId}:
  *   put:
  *     tags: [
  *       seasons

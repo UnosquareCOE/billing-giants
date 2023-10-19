@@ -8,7 +8,7 @@ const getAll = async (req: Request, res: Response) => {
     config.where = {
       start_date: new Date(startDate as string),
     };
-  }
+  } 
 
   const seasons = await prisma.seasons.findMany(config);
   res.json(seasons).status(200);
