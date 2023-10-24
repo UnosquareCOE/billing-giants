@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/index.ts",
-    "test:unit": "NODE_ENV=test jest --testPathIgnorePatterns ./routers/"
+    "test:unit": "jest --testPathIgnorePatterns ./routers/",
+    "test:integration": "jest --config ./jest.integration.config.ts --testPathPattern ./routers/ --forceExit --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
