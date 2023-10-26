@@ -2,23 +2,25 @@ import { when } from "jest-when";
 import { seasonsController } from "../seasons";
 import { mockRequest, mockResponse } from "../../test-utils/mockExpress";
 import { prismaAsAny } from "../../test-utils/prisma";
+import { seasonService } from "../../services/seasons";
 
 jest.mock("@prisma/client");
+jest.mock("../../services/seasons");
 
 describe("seasons controller", () => {
   describe("getAll", () => {
     it("should return 200 when seasons are available", async () => {
       // arrange
-      const req = mockRequest({ query: {} });
+      const req = mockRequest({ query: { } });
       const res = mockResponse();
 
       const seasons = [
         { start_date: new Date(), id: 1, sport_type_id: 1, end_date: null },
       ];
 
-      prismaAsAny.seasons = {
-        findMany: jest.fn().mockReturnValueOnce(seasons),
-      };
+      when(seasonService.getAll)
+        .calledWith(undefined)
+        .mockReturnValueOnce(Promise.resolve(seasons));
 
       // act
       await seasonsController.getAll(req, res);

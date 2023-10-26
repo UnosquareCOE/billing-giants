@@ -1,16 +1,11 @@
 import { Request, Response } from "express";
 import { prisma } from "../utils/prisma";
+import { seasonService } from "../services/seasons";
 
 const getAll = async (req: Request, res: Response) => {
   const { startDate } = req.query;
-  const config: any = {};
-  if (startDate) {
-    config.where = {
-      start_date: new Date(startDate as string),
-    };
-  } 
+  const seasons = await seasonService.getAll(startDate ? new Date(startDate as string) : undefined);
 
-  const seasons = await prisma.seasons.findMany(config);
   res.json(seasons).status(200);
 };
 
