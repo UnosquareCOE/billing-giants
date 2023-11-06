@@ -22,10 +22,31 @@ const create = async (name: string) => {
     });
 }
 
+const update = async (id: number, name: string) => {
+    return await prisma.venues.update({
+        where: {
+            id,
+        },
+        data: {
+            name,
+        },
+    });
+}
+
+const deleteSingle = async (id: number) => {
+    await prisma.venues.delete({
+        where: {
+            id,
+        },
+    });
+}
+
 const venuesService = {
     getAll,
     getSingle,
-    create
+    create,
+    update,
+    deleteSingle
 }
 
 export { venuesService }

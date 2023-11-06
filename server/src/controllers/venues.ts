@@ -28,10 +28,34 @@ const create = async (req: Request, res: Response) => {
     res.status(201).json(venue);
 };
 
+const update = async (req: Request, res: Response) => {
+    const { venueId } = req.params;
+    const { name } = req.body;
+
+    await venuesService.update(parseInt(venueId), name);
+
+    res.sendStatus(204);
+};
+
+const deleteSingle = async (req: Request, res: Response) => {
+    const { venueId } = req.params;
+
+    const venue = await venuesService.getSingle(parseInt(venueId));
+
+    if (venue) {
+        await venuesService.deleteSingle(parseInt(venueId))
+        res.sendStatus(204);
+    } else {
+        res.sendStatus(404);
+    }
+};
+
 const venuesController = {
     getAll,
     getSingle,
-    create
+    create,
+    update,
+    deleteSingle
 };
 
 export { venuesController };

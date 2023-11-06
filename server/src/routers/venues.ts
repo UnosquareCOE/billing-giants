@@ -86,4 +86,63 @@ venueRouter.post(
     venuesController.create
 );
 
+/**
+ * @swagger
+ * /venues/{venueId}:
+ *   put:
+ *     tags: [
+ *       venues
+ *     ]
+ *     summary: Creates a new venue
+ *     parameters:
+ *       - name: venueId
+ *         in: path
+ *         type: integer
+ *         description: The ID of the requested venue.
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 required: true
+ *                 description: The name for the venue.
+ *     responses:
+ *       400:
+ *         description: Bad Request - required values are missing.
+ *       204:
+ *         description: venue updated
+ */
+venueRouter.put(
+    "/:venueId(\\d+)",
+    [
+        body("name").isLength({ min: 5, max: 50 }).withMessage("name is a required field")
+    ],
+    validation.validate,
+    venuesController.update
+);
+
+/**
+ * @swagger
+ * /venues/{venueId}:
+ *   delete:
+ *     tags: [
+ *       venues
+ *     ]
+ *     summary: Deletes an existing venue
+ *     parameters:
+ *       - name: venueId
+ *         in: path
+ *         type: integer
+ *         description: The ID of the requested venue.
+ *     responses:
+ *       400:
+ *         description: Bad Request - required values are missing.
+ *       204:
+ *         description: venue Deleted
+ */
+venueRouter.delete("/:venueId(\\d+)", venuesController.deleteSingle);
+
 export { venueRouter }
