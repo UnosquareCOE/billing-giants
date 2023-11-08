@@ -13,6 +13,16 @@ describe("/venues", () => {
     });
   });
 
+  describe("GET /venues/{id}", () => {
+    it("respond with json containing single venue", async () => {
+      await request(app)
+        .get("/venues/1")
+        .set("Accept", "application/json")
+        .expect("Content-type", /json/)
+        .expect(200);
+    });
+  });
+
   //   describe("POST /venues", () => {
   //     it("respond with 400 with missing data", async () => {
   //         const verifyvenueValidation = (res) => {

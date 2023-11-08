@@ -15,35 +15,36 @@ describe("/seasons", () => {
 
   describe("POST /seasons", () => {
     it("respond with 400 with missing data", async () => {
-        const verifySeasonValidation = (res) => {
-            expect(res.body).toEqual(
-                expect.objectContaining({
-                    error: expect.arrayContaining([
-                        expect.objectContaining({
-                            location: "body",
-                            path: "startDate",
-                            msg: "startDate is a required field",
-                        }),
-                        expect.objectContaining({
-                            location: "body",
-                            path: "sportTypeId",
-                            msg: "sportTypeId is a required field",
-                        }),
-                    ]),
-                })
-            );
-        };
-        
-        await request(app)
-            .post("/seasons")
-            .set("Accept", "application/json")
-            .send({})
-            .expect("Content-type", /json/)
-            .expect(400)
-            .expect(verifySeasonValidation);
+      const verifySeasonValidation = (res) => {
+        expect(res.body).toEqual(
+          expect.objectContaining({
+            error: expect.arrayContaining([
+              expect.objectContaining({
+                location: "body",
+                path: "startDate",
+                msg: "startDate is a required field",
+                type: "field",
+              }),
+              expect.objectContaining({
+                location: "body",
+                path: "sportTypeId",
+                msg: "sportTypeId is a required field",
+                type: "field",
+              }),
+            ]),
+          })
+        );
+      };
+
+      await request(app)
+        .post("/seasons")
+        .set("Accept", "application/json")
+        .send({})
+        .expect("Content-type", /json/)
+        .expect(400)
+        .expect(verifySeasonValidation);
     });
   });
 
-  
+
 });
- 
