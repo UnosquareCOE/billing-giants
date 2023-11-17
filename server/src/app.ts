@@ -3,8 +3,19 @@ import "express-async-errors";
 import cors from "cors";
 import swaggerUI from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
-
 import { seasonRouter, clubsRouter, venueRouter } from "./routers";
+import { createYoga, createSchema } from "graphql-yoga";
+import { venuesResolvers } from "./resolvers";
+import { venueDefs } from "./schemas";
+import { applyMiddleware } from "graphql-middleware";
+import { graphValidation } from "./middleware";
+
+const schema = createSchema({
+  typeDefs: [venueDefs],
+  resolvers: [venuesResolvers]
+})
+
+const yoga = createYoga({ schema: applyMiddleware(schema, graphValidation) });
 
 const swaggerDefinition = {
   openapi: "3.0.0",
@@ -34,6 +45,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/seasons", seasonRouter);
 app.use("/clubs", clubsRouter);
 app.use("/venues", venueRouter);
+
+app.use(yoga.graphqlEndpoint, yoga);
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(openapiSpecification));
 app.use("/swagger.json", (req: Request, res: Response) =>
