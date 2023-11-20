@@ -9,6 +9,7 @@ import { venuesResolvers } from "./resolvers";
 import { venueDefs } from "./schemas";
 import { applyMiddleware } from "graphql-middleware";
 import { graphValidation } from "./middleware";
+import { usersRouter } from "./routers/users";
 
 const schema = createSchema({
   typeDefs: [venueDefs],
@@ -45,6 +46,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/seasons", seasonRouter);
 app.use("/clubs", clubsRouter);
 app.use("/venues", venueRouter);
+app.use("/users", usersRouter);
 
 app.use(yoga.graphqlEndpoint, yoga);
 

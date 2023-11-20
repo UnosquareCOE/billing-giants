@@ -181,3 +181,12 @@ model venues {
   name    String?
   matches matches[]
 }
+
+model users {
+  id          Int     @id(map: "users_pk") @default(autoincrement())
+  first_name  String
+  second_name String
+  email       String
+  password    String
+  active      Boolean @default(true)
+}

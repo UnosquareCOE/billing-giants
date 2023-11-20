@@ -132,3 +132,13 @@ CREATE TABLE IF NOT EXISTS public.match_team_player_events
     match_team_player_id INT CONSTRAINT match_team_player_events_match_team_players_match_team_player_id REFERENCES match_team_players NOT NULL,
     event_id INT CONSTRAINT match_team_player_events_events_event_id REFERENCES events NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS public.users
+(
+    id serial constraint users_pk primary key,
+    first_name text not null,
+    second_name text not null,
+    email text not null,
+    password text not null,
+    active boolean default true not null
+);
