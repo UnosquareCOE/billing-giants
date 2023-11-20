@@ -10,7 +10,7 @@ const graphValidation = {
           } catch (error) {
             if (error instanceof ValidationError) {
               return {
-                error: error.message,
+                errors: error.errors,
               }
             } else {
               throw error

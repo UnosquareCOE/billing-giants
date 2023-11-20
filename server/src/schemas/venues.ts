@@ -4,8 +4,13 @@ const venueDefs = `
     name: String!
   }
 
+  type CreateVenueResponse {
+    errors: [String]
+    venue: Venue
+  }
+
   type Mutation {
-    createVenue(name: String!) : Venue!
+    CreateVenue(name: String!) : CreateVenueResponse!
   }
 
   type Query {
