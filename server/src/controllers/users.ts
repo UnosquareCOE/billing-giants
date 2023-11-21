@@ -28,7 +28,7 @@ async function updateUser(req : Request, res: Response) {
   const { userId } = req.params;
   const { firstName, secondName, email, password } = req.body;
   await usersService.update({ id: parseInt(userId), firstName, secondName, email, password });
-  return res.status(204);
+  return res.sendStatus(204);
 }
   
 const usersController = {

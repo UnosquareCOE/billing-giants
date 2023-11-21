@@ -23,7 +23,6 @@ const getByEmail = (email: string) =>  {
 
 const create = async ({ firstName, secondName, email, password }) => {
   const hashedPassword = await bcrypt.hash(password, 10);
-
   return prisma.users.create({
     data: {
         first_name: firstName,
