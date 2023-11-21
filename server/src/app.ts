@@ -3,7 +3,7 @@ import "express-async-errors";
 import cors from "cors";
 import swaggerUI from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
-import { seasonRouter, clubsRouter, venueRouter } from "./routers";
+import { seasonRouter, clubsRouter, venueRouter, authenticationRouter } from "./routers";
 import { createYoga, createSchema } from "graphql-yoga";
 import { venuesResolvers } from "./resolvers";
 import { venueDefs } from "./schemas";
@@ -43,6 +43,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/authentication", authenticationRouter);
 app.use("/seasons", seasonRouter);
 app.use("/clubs", clubsRouter);
 app.use("/venues", venueRouter);
