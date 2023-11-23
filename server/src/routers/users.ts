@@ -54,7 +54,6 @@ usersRouter.route("/").get(usersController.getUsers);
  */
 usersRouter.route("/:userId(\\d+)").get(usersController.getUserById);
 
-
 /**
  * @swagger
  * /users:
@@ -116,51 +115,51 @@ usersRouter
         .isLength({ min: 5 })
         .withMessage("the email must be in correct email format")
         .trim(),
-      body("password").isString().withMessage("password is required").trim()
+      body("password").isString().withMessage("password is required").trim(),
     ],
     validation.validate,
     usersController.createUser
   );
 
-  /**
-  * @swagger
-  * /users/{userId}:
-  *   put:
-  *     tags: [
-  *       users
-  *     ]
-  *     summary: Update a user by user ID
-  *     parameters:
-  *      - name: userId
-  *        in: path
-  *        type: interger
-  *        description: The ID of the requested user
-  *     requestBody:
-  *       content:
-  *        application/json:
-  *          schema:
-  *            type: object
-  *            properties:
-  *              firstName:
-  *                type: string
-  *                required: true
-  *                descriptions: The users first name
-  *              secondName:
-  *                type: string
-  *                required: true
-  *                descriptions: The users second name
-  *              email:
-  *                type: string
-  *                required: true
-  *                description: The users email
-  *              password:
-  *                type: string
-  *                required: true
-  *                description: The users password
-  *     responses:
-  *       204:
-  *         description: No content
-  */
+/**
+ * @swagger
+ * /users/{userId}:
+ *   put:
+ *     tags: [
+ *       users
+ *     ]
+ *     summary: Update a user by user ID
+ *     parameters:
+ *      - name: userId
+ *        in: path
+ *        type: interger
+ *        description: The ID of the requested user
+ *     requestBody:
+ *       content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              firstName:
+ *                type: string
+ *                required: true
+ *                descriptions: The users first name
+ *              secondName:
+ *                type: string
+ *                required: true
+ *                descriptions: The users second name
+ *              email:
+ *                type: string
+ *                required: true
+ *                description: The users email
+ *              password:
+ *                type: string
+ *                required: true
+ *                description: The users password
+ *     responses:
+ *       204:
+ *         description: No content
+ */
 usersRouter
   .route("/:userId(\\d+)")
   .put(
@@ -180,10 +179,31 @@ usersRouter
         .isLength({ min: 5 })
         .withMessage("the email must be in correct email format")
         .trim(),
-      body("password").isString().withMessage("password is required.").trim()
+      body("password").isString().withMessage("password is required.").trim(),
     ],
     validation.validate,
     usersController.updateUser
   );
+
+/**
+ * @swagger
+ * /users/{userId}:
+ *   delete:
+ *     tags: [
+ *       users
+ *     ]
+ *     summary: Deletes an existing user
+ *     parameters:
+ *       - name: userId
+ *         in: path
+ *         type: integer
+ *         description: The ID of the requested user.
+ *     responses:
+ *       400:
+ *         description: Bad Request - required values are missing.
+ *       204:
+ *         description: user Deleted
+ */
+usersRouter.route("/:userId(\\d+)").delete(usersController.deleteUser);
 
 export { usersRouter };
