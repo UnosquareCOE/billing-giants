@@ -13,12 +13,14 @@ const getById = (id: number) =>  {
   }); 
 }
 
-const getByEmail = (email: string) =>  {
-  return prisma.users.findMany({
+const getByEmail = async (email: string) =>  {
+  const users = await prisma.users.findMany({
     where: {
       email,
     }
   }); 
+
+  return users.length === 1 && users[0];
 }
 
 const create = async ({ firstName, secondName, email, password }) => {

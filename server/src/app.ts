@@ -10,6 +10,7 @@ import { venueDefs } from "./schemas";
 import { applyMiddleware } from "graphql-middleware";
 import { graphValidation } from "./middleware";
 import { usersRouter } from "./routers/users";
+import { verifyAccessToken } from "./middleware/authentication";
 
 const schema = createSchema({
   typeDefs: [venueDefs],
@@ -30,6 +31,23 @@ const swaggerDefinition = {
       description: "Local development server",
     },
   ],
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: "http",
+        in: "header",
+        name: "Authorization",
+        description: "Bearer token to access api endpoints",
+        scheme: "bearer",
+        bearerFormat: "JWT"
+      }
+    }
+  },
+  security: [
+    {
+      bearerAuth: []
+    }
+  ]
 };
 
 const openapiSpecification = swaggerJSDoc({
@@ -43,18 +61,22 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/authentication", authenticationRouter);
-app.use("/seasons", seasonRouter);
-app.use("/clubs", clubsRouter);
-app.use("/venues", venueRouter);
-app.use("/users", usersRouter);
-
-app.use(yoga.graphqlEndpoint, yoga);
-
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(openapiSpecification));
 app.use("/swagger.json", (req: Request, res: Response) =>
   res.json(openapiSpecification).status(200)
 );
+
+app.use(yoga.graphqlEndpoint, yoga);
+
+app.use("/authentication", authenticationRouter);
+
+// middleware for authenticate user.
+app.use(verifyAccessToken);
+
+app.use("/seasons", seasonRouter);
+app.use("/clubs", clubsRouter);
+app.use("/venues", venueRouter);
+app.use("/users", usersRouter);
 
 // Error handling middleware
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
