@@ -2,7 +2,9 @@ import { usersService } from "../services/users";
 import { Request, Response } from "express";
 
 async function getUsers(req: Request, res: Response) {
-  const users = await usersService.getAll();
+  const { active } = req.query;
+  const activeOnly = !active || String(active).toLowerCase() === "true";
+  const users = await usersService.getAll(activeOnly);
   return res.status(200).json(users);
 }
 

@@ -13,6 +13,11 @@ const usersRouter = Router();
  *       users
  *     ]
  *     summary: Returns an array of users with the user ID, name & password
+ *     parameters:
+ *       - name: active
+ *         in: query
+ *         type: boolean
+ *         description: Whether or not to retrieve active users
  *     responses:
  *       200:
  *         description: OK

@@ -1,8 +1,8 @@
 import { prisma } from "../utils/prisma";
 import bcrypt from "bcrypt";
 
-const getAll = () => {
-  return prisma.users.findMany({ where: { active: true } });
+const getAll = (active: boolean = true) => {
+  return prisma.users.findMany({ where: { active } });
 };
 
 const getById = (id: number) => {
