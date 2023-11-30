@@ -3,13 +3,12 @@ import "express-async-errors";
 import cors from "cors";
 import swaggerUI from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
-import { seasonRouter, clubsRouter, venueRouter, authenticationRouter } from "./routers";
+import { seasonRouter, clubsRouter, venueRouter, authenticationRouter, usersRouter,playerRouter } from "./routers";
 import { createYoga, createSchema } from "graphql-yoga";
 import { venuesResolvers } from "./resolvers";
 import { venueDefs } from "./schemas";
 import { applyMiddleware } from "graphql-middleware";
 import { graphValidation } from "./middleware";
-import { usersRouter } from "./routers/users";
 import { verifyAccessToken } from "./middleware/authentication";
 
 const schema = createSchema({
@@ -76,6 +75,7 @@ app.use(verifyAccessToken);
 app.use("/seasons", seasonRouter);
 app.use("/clubs", clubsRouter);
 app.use("/venues", venueRouter);
+app.use("/players", playerRouter);
 app.use("/users", usersRouter);
 
 // Error handling middleware

@@ -16,7 +16,7 @@ services:
     command: -url=jdbc:postgresql://db/billinggiants -schemas=public -user=postgres
       -password=password -connectRetries=5 migrate
     volumes:
-      - ./database/migrations:/flyway/sql
+      - ./database:/flyway/sql
     depends_on:
       - db
 volumes:
