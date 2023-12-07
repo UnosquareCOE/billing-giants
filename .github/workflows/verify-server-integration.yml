@@ -1,0 +1,23 @@
+name: Verify Server Unit Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "server/**"
+      - "database/**"
+
+defaults:
+  run:
+    working-directory: ./server
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: NPM Install
+        run: npm i
+      - name: tests
+        run: npm run test:integration
