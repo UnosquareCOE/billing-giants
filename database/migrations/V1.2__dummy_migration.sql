@@ -1,0 +1,1 @@
+insert into event_types(description) values ('Free Kick');
