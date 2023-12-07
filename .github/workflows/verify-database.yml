@@ -1,0 +1,16 @@
+name: Verify Database
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "database/**"
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: verify database migrations
+        run: docker compose up --abort-on-container-exit
