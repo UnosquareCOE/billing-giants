@@ -67,10 +67,14 @@ app.use("/swagger.json", (req: Request, res: Response) =>
 
 app.use(yoga.graphqlEndpoint, yoga);
 
+
+
 app.use("/authentication", authenticationRouter);
 
 // middleware for authenticate user.
 app.use(verifyAccessToken);
+
+
 
 app.use("/seasons", seasonRouter);
 app.use("/clubs", clubsRouter);
