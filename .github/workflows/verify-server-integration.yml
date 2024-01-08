@@ -1,4 +1,4 @@
-name: Verify Server Unit Tests
+name: Verify Server Integration Tests
 
 on:
   pull_request:
