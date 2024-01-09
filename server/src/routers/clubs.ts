@@ -148,3 +148,4 @@ clubsRouter.put(
 clubsRouter.delete("/:clubId(\\d+)", clubsController.deleteSingle);
 
 export { clubsRouter };
+
