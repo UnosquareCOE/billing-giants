@@ -100,7 +100,6 @@ clubsRouter.post(
  *     parameters:
  *       - name: clubId
  *         in: path
- *         type: integer
  *         description: The ID of the requested club.
  *     requestBody:
  *       content:
