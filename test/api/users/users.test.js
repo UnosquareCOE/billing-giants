@@ -18,6 +18,7 @@ describe("Users", () => {
             password: "testPassword123!"
           });
         
+          
         expect(userCreateResponse.status).toBe(201);
 
         const authResponse = await axios.post("authentication", {
