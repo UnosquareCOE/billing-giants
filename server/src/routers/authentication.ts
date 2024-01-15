@@ -43,7 +43,7 @@ authenticationRouter
         .withMessage("the email must be in email format")
         .trim(),
         body("password")
-        .isLength({ min: 6, max: 15 })
+        .isLength({ min: 6, max: 16 })
         .withMessage(
           "your password should have min and max length between 8-15"
         )

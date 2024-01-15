@@ -19,5 +19,18 @@ services:
       - ./database:/flyway/sql
     depends_on:
       - db
+  api:
+    profiles: ["dev"]
+    build:
+      context: ./server
+      dockerfile: Dockerfile.local
+    volumes:
+      - ./server:/app
+    ports:
+      - "4000:4000"
+    depends_on:
+      - flyway
+    environment:
+      DATABASE_URL: "postgres://postgres:password@db:5432/billinggiants?schema=public"
 volumes:
   db: 
