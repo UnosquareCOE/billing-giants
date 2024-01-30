@@ -1,0 +1,3 @@
+[submodule "CICDAcademy"]
+	path = CICDAcademy
+	url = git@github.com:UnosquareCOE/CICDAcademy.git
